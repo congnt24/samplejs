@@ -1,0 +1,98 @@
+image: registry.vntrip.vn:5000/docker-rancher:latest
+variables:
+  REGISTRY_URL: registry.vntrip.vn:5000
+  REPO_NAME: hotel-booking-service
+  GIT_SUBMODULE_STRATEGY: normal
+
+stages:
+  - build-test
+  - build-dev
+  - build-staging
+  - build-production
+  - deploy-test
+  - deploy-dev
+  - deploy-staging
+  - deploy-production
+
+build-test:
+  stage: build-test
+  before_script:
+    - apk add --no-cache git
+    - git submodule update --remote
+  script:
+    - docker login -u vntrip -p vntr1p.vn $REGISTRY_URL
+    - docker build -t $REGISTRY_URL/$REPO_NAME:test .
+    - docker push $REGISTRY_URL/$REPO_NAME:test
+  only:
+    - test
+build-dev:
+  stage: build-dev
+  before_script:
+    - apk add --no-cache git
+    - git submodule update --remote
+  script:
+    - docker login -u vntrip -p vntr1p.vn $REGISTRY_URL
+    - docker build -t $REGISTRY_URL/$REPO_NAME:dev .
+    - docker push $REGISTRY_URL/$REPO_NAME:dev
+  only:
+    - dev
+build-staging:
+  stage: build-staging
+  before_script:
+    - apk add --no-cache git
+    - git submodule update --remote
+  script:
+    - docker login -u vntrip -p vntr1p.vn $REGISTRY_URL
+    - docker build -t $REGISTRY_URL/$REPO_NAME:staging .
+    - docker push $REGISTRY_URL/$REPO_NAME:staging
+  only:
+    - staging
+build-production:
+  stage: build-production
+  before_script:
+    - apk add --no-cache git
+    - git submodule update --remote
+  script:
+    - docker login -u vntrip -p vntr1p.vn $REGISTRY_URL
+    - docker build -t $REGISTRY_URL/$REPO_NAME:production .
+    - docker push $REGISTRY_URL/$REPO_NAME:production
+  only:
+    - master
+
+deploy-test:
+  stage: deploy-test
+  script:
+    - upgrade --environment dev --stack services-test --service hotel-booking-test
+  environment:
+    name: test
+    url: https://test-micro-services.vntrip.vn/hotel-booking
+  only:
+    - test
+deploy-dev:
+  stage: deploy-dev
+  script:
+    - upgrade --environment dev --stack services-dev --service hotel-booking-dev
+  environment:
+    name: dev
+    url: https://dev-micro-services.vntrip.vn/hotel-booking
+  only:
+    - dev
+deploy-staging:
+  stage: deploy-staging
+  script:
+    - upgrade --environment dev --stack services-staging --service hotel-booking-staging
+  environment:
+    name: staging
+    url: https://staging-micro-services.vntrip.vn/hotel-booking
+  only:
+    - staging
+deploy-production:
+  stage: deploy-production
+  script:
+    - upgrade --environment services --stack services-production --service hotel-booking-production
+  environment:
+    name: production
+    url: https://micro-services.vntrip.vn/hotel-booking
+  only:
+    - master
+  when: manual

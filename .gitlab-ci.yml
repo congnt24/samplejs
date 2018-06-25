@@ -1,0 +1,37 @@
+image: docker:git
+variables:
+  REPOSITORY_URL: ....
+  REPO_NAME: $CI_PROJECT_DIR
+  GIT_SUBMODULE_STRATEGY: normal
+stages:
+  - build-test
+#  - build-dev
+#  - build-staging
+#  - build-production
+#  - deploy-test
+#  - deploy-dev
+#  - deploy-staging
+#  - deploy-production
+
+build-test:
+  stage: build-test
+  before_script:
+    - apk add --no-cache curl jq python py-pip git
+    - pip install awscli
+    - git submodule update --remote
+  script:
+    - $(aws ecr get-login --no-include-email --region us-east-2)
+    - docker build -t $REPOSITORY_URL/$REPO_NAME:test .
+    - docker push $REPOSITORY_URL/$REPO_NAME:test
+  only:
+    - test
+#
+#deploy-test:
+#  stage: deploy-test
+#  script:
+#    - upgrade --environment dev --stack services-test --service hotel-booking-test
+#  environment:
+#    name: test
+#    url: https://test-micro-services.vntrip.vn/hotel-booking
+#  only:
+#    - test
