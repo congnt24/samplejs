@@ -24,8 +24,8 @@ build-test:
     - $(aws ecr get-login --no-include-email --region $REGION)
     - aws ecr create-repository --repository-name $REPO_NAME --region $REGION || echo "success"
     - docker build -t $REPO_NAME:latest .
-    - docker tag $REPO_NAME:latest $REPOSITORY_URL/$REPO_NAME:latest
-    - docker push $REPOSITORY_URL/$REPO_NAME:latest
+    - docker tag -f $REPO_NAME:latest $REPOSITORY_URL/$REPO_NAME:latest
+    - docker push -f $REPOSITORY_URL/$REPO_NAME:latest
   only:
     - master
 #
