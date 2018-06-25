@@ -1,4 +1,4 @@
-image: docker:git
+image: docker:latest
 variables:
   REPOSITORY_URL: ....
   REPO_NAME: $CI_PROJECT_DIR
