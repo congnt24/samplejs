@@ -1,6 +1,6 @@
 image: docker:latest
 variables:
-  REPOSITORY_URL: ....
+  REPOSITORY_URL: 249362495243.dkr.ecr.us-east-2.amazonaws.com
   REPO_NAME: $CI_PROJECT_DIR
   GIT_SUBMODULE_STRATEGY: normal
 stages:
