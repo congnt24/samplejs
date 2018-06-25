@@ -22,8 +22,8 @@ build-test:
   script:
     - $(aws ecr get-login --no-include-email --region us-east-2)
     - aws ecr create-repository --repository-name $REPO_NAME --region us-east-2
-    - docker build -t $REPOSITORY_URL/$REPO_NAME:test .
-    - docker push $REPOSITORY_URL/$REPO_NAME:test
+    - docker build -t $REPOSITORY_URL/$REPO_NAME:latest .
+    - docker push $REPOSITORY_URL/$REPO_NAME:latest
   only:
     - master
 #
