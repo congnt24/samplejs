@@ -24,7 +24,7 @@ build-test:
     - docker build -t $REPOSITORY_URL/$REPO_NAME:test .
     - docker push $REPOSITORY_URL/$REPO_NAME:test
   only:
-    - test
+    - master
 #
 #deploy-test:
 #  stage: deploy-test
