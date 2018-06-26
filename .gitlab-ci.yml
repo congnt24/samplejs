@@ -1,9 +1,8 @@
-image: docker:latest
+image: 249362495243.dkr.ecr.us-east-2.amazonaws.com/docker
 variables:
   REPOSITORY_URL: 249362495243.dkr.ecr.us-east-2.amazonaws.com
   REPO_NAME: $CI_PROJECT_NAME
   GIT_SUBMODULE_STRATEGY: normal
-  REGION: us-east-2
 stages:
   - build-test
 #  - build-dev
@@ -17,14 +16,12 @@ stages:
 build-test:
   stage: build-test
   before_script:
-    - apk add --no-cache curl jq python py-pip git
-    - pip install awscli
     - git submodule update --remote
   script:
-    - $(aws ecr get-login --no-include-email --region $REGION)
+    - $(aws ecr get-login --no-include-email)
     - aws ecr create-repository --repository-name $REPO_NAME --region $REGION || echo "success"
     - docker build -t $REPO_NAME:latest .
-    - docker tag -f $REPO_NAME:latest $REPOSITORY_URL/$REPO_NAME:latest
+    - docker tag $REPO_NAME:latest $REPOSITORY_URL/$REPO_NAME:latest
     - docker push -f $REPOSITORY_URL/$REPO_NAME:latest
   only:
     - master
