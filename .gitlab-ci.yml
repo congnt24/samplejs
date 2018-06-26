@@ -17,7 +17,7 @@ stages:
 
 
 build-init:
-stage: build-init
+  stage: build-init
   before_script:
     - apk add --no-cache curl jq python py-pip git
     - pip install awscli
