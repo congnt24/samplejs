@@ -1,4 +1,4 @@
-image: 249362495243.dkr.ecr.us-east-2.amazonaws.com/docker
+image: 249362495243.dkr.ecr.us-east-2.amazonaws.com/docker:latest
 variables:
   REPOSITORY_URL: 249362495243.dkr.ecr.us-east-2.amazonaws.com
   REPO_NAME: $CI_PROJECT_NAME
