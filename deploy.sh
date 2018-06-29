@@ -12,11 +12,12 @@ REVISION=`aws ecs describe-task-definition --task-definition ${CI_PROJECT_NAME} 
 
 #Create or update service
 if [ "$SERVICES" == "" ]; then
-  echo "entered existing service"
+  echo "entered existing service ${REVISION}"
   DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[].desiredCount'`
   if [ ${DESIRED_COUNT} = "0" ]; then
     DESIRED_COUNT="1"
   fi
+  echo "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}"
   aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
 else
   echo "entered new service"
