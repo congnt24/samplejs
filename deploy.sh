@@ -8,7 +8,7 @@ sed -e "s;%REGION%;${AWS_DEFAULT_REGION};g" -e "s;%SERVICE_NAME%;${SERVICE_NAME}
 aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://${CI_PROJECT_NAME}.json
 SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.failures[]'`
 #Get latest revision
-REVISION=`aws ecs describe-task-definition --task-definition ${CI_PROJECT_NAME} | 'jq .taskDefinition.revision'`
+REVISION=`aws ecs describe-task-definition --task-definition ${CI_PROJECT_NAME} | jq '.taskDefinition.revision'`
 
 #Create or update service
 if [ "$SERVICES" == "" ]; then
