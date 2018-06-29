@@ -1,0 +1,12 @@
+{
+  "loadBalancers": [
+    {
+      "loadBalancerName": "testlb",
+      "containerName": "testgitlab-service",
+      "containerPort": 3000
+    }
+  ],
+  "desiredCount": 1,
+  "role": "ecsServiceRole"
+}
+

@@ -14,7 +14,7 @@
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "ecs-log-streaming",
+          "awslogs-group": "ecs-log-service",
           "awslogs-region": "%REGION%"
         }
       }
