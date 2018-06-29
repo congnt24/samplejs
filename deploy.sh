@@ -13,7 +13,7 @@ REVISION=`aws ecs describe-task-definition --task-definition ${CI_PROJECT_NAME} 
 #Create or update service
 if [ "$SERVICES" == "" ]; then
   echo "entered existing service"
-  DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq .services[].desiredCount`
+  DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[].desiredCount'`
   if [ ${DESIRED_COUNT} = "0" ]; then
     DESIRED_COUNT="1"
   fi
