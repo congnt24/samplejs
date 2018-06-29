@@ -10,7 +10,14 @@
           "hostPort": 80,
           "protocol": "tcp"
         }
-      ]
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "ecs-log-streaming",
+          "awslogs-region": "%REGION%"
+        }
+      }
     }
   ],
   "memory": "128",
