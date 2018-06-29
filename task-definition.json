@@ -24,9 +24,6 @@
   ],
   "memory": "128",
   "taskRoleArn": null,
-  "compatibilities": [
-    "EC2"
-  ],
   "requiresCompatibilities": [
     "EC2"
   ],
