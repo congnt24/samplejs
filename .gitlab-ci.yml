@@ -11,7 +11,7 @@ stages:
 #  - build-dev
 #  - build-staging
 #  - build-production
-#  - deploy-test
+  - deploy-test
 #  - deploy-dev
 #  - deploy-staging
 #  - deploy-production
@@ -40,14 +40,13 @@ build-test:
     - docker build -t $REPO_NAME:latest .
     - docker tag $REPO_NAME:latest $REPOSITORY_URL/$REPO_NAME:latest
     - docker push $REPOSITORY_URL/$REPO_NAME:latest
-    - sh ./deploy.sh
   only:
     - master
 
 deploy-test:
   stage: deploy-test
   script:
-    - upgrade --environment dev --stack services-test --service hotel-booking-test
+    - sh ./deploy.sh
   only:
     - master
   when: on_success
