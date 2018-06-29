@@ -3,8 +3,8 @@
     {
       "image": "%REPOSITORY_URI%",
       "name": "%SERVICE_NAME%",
-      "cpu": 1,
-      "memoryReservation": 128,
+      "cpu": 0,
+      "memoryReservation": null,
       "essential": true,
       "portMappings": [
         {
@@ -21,5 +21,14 @@
         }
       }
     }
-  ]
+  ],
+  "memory": "128",
+  "taskRoleArn": null,
+  "compatibilities": [
+    "EC2"
+  ],
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "cpu": "128"
 }
