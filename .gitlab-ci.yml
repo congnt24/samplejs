@@ -1,6 +1,6 @@
 image: trungcong24/docker
 variables:
-  REPOSITORY_URL: 249362495243.dkr.ecr.us-east-2.amazonaws.com
+  REPOSITORY_URI: 249362495243.dkr.ecr.us-east-2.amazonaws.com
   REPO_NAME: $CI_PROJECT_NAME
   GIT_SUBMODULE_STRATEGY: normal
   AWS_DEFAULT_REGION: us-east-2
