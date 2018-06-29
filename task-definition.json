@@ -3,7 +3,7 @@
     {
       "image": "%REPOSITORY_URI%",
       "name": "%SERVICE_NAME%",
-      "cpu": 0,
+      "cpu": 1,
       "memoryReservation": 128,
       "essential": true,
       "portMappings": [
