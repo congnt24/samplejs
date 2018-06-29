@@ -1,0 +1,21 @@
+{
+  "containerDefinitions": [
+    {
+      "image": "%REPOSITORY_URI%",
+      "name": "%SERVICE_NAME%",
+      "cpu": 0,
+      "memoryReservation": 128,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs"
+      }
+    }
+  ]
+}
