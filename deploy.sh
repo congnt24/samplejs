@@ -23,5 +23,6 @@ if [ "$SERVICES" != "" ]; then
   aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
 else
   echo "entered new service"
+
   aws ecs create-service --service-name ${SERVICE_NAME} --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --cli-input-json file://${CI_PROJECT_NAME}_SERVICE.json
 fi

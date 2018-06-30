@@ -33,8 +33,7 @@ build-test:
     - git submodule update --remote
   script:
     - $(aws ecr get-login --no-include-email)
-    - docker build -t $REPO_NAME:latest .
-    - docker tag $REPO_NAME:latest $REPOSITORY_URI/$REPO_NAME:latest
+    - docker build -t $REPOSITORY_URI/$REPO_NAME:latest .
     - docker push $REPOSITORY_URI/$REPO_NAME:latest
   only:
     - master
