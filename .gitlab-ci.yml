@@ -6,33 +6,20 @@ variables:
   AWS_DEFAULT_REGION: us-east-2
   SERVICE_NAME: $CI_PROJECT_NAME-service
 stages:
-  - build-init
   - build-test
-#  - build-dev
 #  - build-staging
 #  - build-production
   - deploy-test
-#  - deploy-dev
 #  - deploy-staging
 #  - deploy-production
 
-
-build-init:
-  stage: build-init
-  before_script:
-    - git submodule update --remote
-  script:
-    - $(aws ecr get-login --no-include-email)
-    - aws ecr create-repository --repository-name $REPO_NAME || echo "success"
-  only:
-    - init
 build-test:
   stage: build-test
   before_script:
-    - export FAMILY=test-services
     - git submodule update --remote
   script:
     - $(aws ecr get-login --no-include-email)
+    - sh ./create_repo.sh
     - docker build -t $REPOSITORY_URI/$REPO_NAME:latest .
     - docker push $REPOSITORY_URI/$REPO_NAME:latest
   only:
@@ -40,9 +27,11 @@ build-test:
 
 deploy-test:
   stage: deploy-test
-  script:
-    - export FAMILY=${REPO_NAME}_test
+  before_script:
     - export CLUSTER=test
+    - export FAMILY=${REPO_NAME}_${CLUSTER}
+    - export VPCID=vpc-b7e5bcdf
+  script:
     - $(aws ecr get-login --no-include-email)
     - sh ./deploy.sh
   only:

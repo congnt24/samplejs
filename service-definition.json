@@ -1,12 +1,16 @@
 {
   "loadBalancers": [
     {
-      "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-2:249362495243:targetgroup/target-group/c21cd39e6b209d48",
+      "targetGroupArn": "%TARGETARN%",
       "containerName": "%SERVICE_NAME%",
       "containerPort": 3000
     }
   ],
   "desiredCount": 1,
-  "role": "ecsServiceRole"
+  "role": "ecsServiceRole",
+  "deploymentConfiguration": {
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100
+  }
 }
 

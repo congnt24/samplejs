@@ -23,6 +23,5 @@
   "memory": "128",
   "requiresCompatibilities": [
     "EC2"
-  ],
-  "cpu": "128"
+  ]
 }
