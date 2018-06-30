@@ -6,7 +6,7 @@ TASKDEF=task-definition.json
 sed -e "s;%REGION%;${AWS_DEFAULT_REGION};g" -e "s;%SERVICE_NAME%;${SERVICE_NAME};g" -e "s;%REPOSITORY_URI%;${REPOSITORY_URI}/$REPO_NAME:latest;g" $TASKDEF > ${CI_PROJECT_NAME}.json
 #Register the task definition in the repository
 aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://${CI_PROJECT_NAME}.json
-SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.failures[]'`
+SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[] | select(.status == "ACTIVE")'`
 #Get latest revision
 REVISION=`aws ecs describe-task-definition --task-definition ${FAMILY} | jq '.taskDefinition.revision'`
 
