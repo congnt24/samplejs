@@ -28,10 +28,10 @@ build-test:
 deploy-test:
   stage: deploy-test
   before_script:
-    - CLUSTER=test
-    - FAMILY=${REPO_NAME}_${CLUSTER}
-    - VPCID=vpc-b7e5bcdf
-    - ALB_LISTENER=arn:aws:elasticloadbalancing:us-east-2:249362495243:listener/app/test/8913e94197cf1cd2/f4578621b4031287
+    - export CLUSTER=test
+    - export FAMILY=${REPO_NAME}_${CLUSTER}
+    - export VPCID=vpc-b7e5bcdf
+    - export ALB_LISTENER=arn:aws:elasticloadbalancing:us-east-2:249362495243:listener/app/test/8913e94197cf1cd2/f4578621b4031287
   script:
     - $(aws ecr get-login --no-include-email)
     - sh ./deploy.sh
