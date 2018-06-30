@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-REPO_NAME=testgitlab
 {
     aws ecr describe-repositories --repository-name ${REPO_NAME}
 } || {
