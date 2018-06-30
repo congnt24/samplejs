@@ -10,17 +10,17 @@ sed -e "s;%SERVICE_NAME%;${SERVICE_NAME};g" $SERVICEDEF > ${CI_PROJECT_NAME}_SER
 aws ecs register-task-definition --family ${FAMILY} --cli-input-json file://${CI_PROJECT_NAME}.json
 SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[] | select(.status == "ACTIVE")'`
 #Get latest revision
-REVISION=`aws ecs describe-task-definition --task-definition ${FAMILY} | jq '.taskDefinition.revision'`
+#REVISION=`aws ecs describe-task-definition --task-definition ${FAMILY} | jq '.taskDefinition.revision'`
 
 #Create or update service
 if [ "$SERVICES" != "" ]; then
-  echo "entered existing service ${REVISION}"
-  DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[].desiredCount'`
-  if [ ${DESIRED_COUNT} = "0" ]; then
-    DESIRED_COUNT="1"
-  fi
-  echo "aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}"
-  aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
+#  echo "entered existing service ${REVISION}"
+#  DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[].desiredCount'`
+#  if [ ${DESIRED_COUNT} = "0" ]; then
+#    DESIRED_COUNT="1"
+#  fi
+#  aws ecs update-service --cluster ${CLUSTER} --service ${SERVICE_NAME} --task-definition ${FAMILY}:${REVISION} --desired-count ${DESIRED_COUNT}
+    ecs-deploy -c ${CLUSTER} -n ${SERVICE_NAME} -i '${REPOSITORY_URI}/${REPO_NAME}:latest'
 else
   echo "entered new service"
 
