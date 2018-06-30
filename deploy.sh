@@ -22,7 +22,7 @@ if [ "$SERVICES" != "" ]; then
 else
   echo "entered new service"
   TARGER_ARN=`aws elbv2 create-target-group --name ${SERVICE_NAME}-target --protocol HTTP --port 80 --vpc-id ${VPCID} | jq -r '.TargetGroups[].TargetGroupArn'`
-  aws elbv2 create-rule --listener-arn ${ALB_LISTENER} --priority $RANDOM --condition Field=path-pattern,Values='/img/*' --actions Type=forward,TargetGroupArn=${TARGER_ARN}
+  aws elbv2 create-rule --listener-arn ${ALB_LISTENER} --priority $RANDOM --condition Field=path-pattern,Values='/${ROUTE}/*' --actions Type=forward,TargetGroupArn=${TARGER_ARN}
   sed -e "s;%TARGETARN%;${TARGER_ARN};g" -e "s;%SERVICE_NAME%;${SERVICE_NAME};g" $SERVICEDEF > ${CI_PROJECT_NAME}_SERVICE.json
   aws ecs create-service --service-name ${SERVICE_NAME} --desired-count 1 --task-definition ${FAMILY} --cluster ${CLUSTER} --cli-input-json file://${CI_PROJECT_NAME}_SERVICE.json
 fi

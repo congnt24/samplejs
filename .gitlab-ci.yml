@@ -5,6 +5,7 @@ variables:
   GIT_SUBMODULE_STRATEGY: normal
   AWS_DEFAULT_REGION: us-east-2
   SERVICE_NAME: $CI_PROJECT_NAME-service
+  ROUTE: test1
 stages:
   - build-test
 #  - build-staging
