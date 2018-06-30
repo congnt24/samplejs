@@ -11,7 +11,7 @@ SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUST
 REVISION=`aws ecs describe-task-definition --task-definition ${FAMILY} | jq '.taskDefinition.revision'`
 
 #Create or update service
-if [ "$SERVICES" == "" ]; then
+if [ "$SERVICES" != "" ]; then
   echo "entered existing service ${REVISION}"
   DESIRED_COUNT=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} | jq '.services[].desiredCount'`
   if [ ${DESIRED_COUNT} = "0" ]; then
